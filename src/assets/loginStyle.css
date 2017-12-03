@@ -1,0 +1,75 @@
+.app-background{
+  position: fixed;
+  left: 0;
+  top:0;
+  height: 100%;
+  width: 100%;
+  min-width: 1000px;
+  z-index: -100;
+  background-position: center 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  zoom: 1;
+}
+.app-background img{
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  z-index: -99;
+}
+.app-router-link {
+  font-family: inherit;
+  font-weight: bold;
+  color: #409EFF;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+}
+.el-menu-vertical-demo {
+  min-height: 100%;
+}
+.app-menu{
+  position: fixed;
+  top:62px;
+  left:0;
+  bottom: 0;
+  height: 100%;
+}
+.app-header{
+  position: fixed;
+  top:0;
+  left:0;
+  height:60px;
+  width:100%;
+  border-bottom:1px solid #DFE4ED;
+}
+.app-index-menu-open{
+  float: left;
+  margin-top:61px;
+  margin-left:202px;
+}
+.app-index-menu-close{
+  float: left;
+  margin-top:61px;
+  margin-left:66px;
+}
+.app-header .app-header-filter{
+  float:right;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  height: 0;
+  clear: both
+}
+.bottom-item{
+  margin-bottom: 0;
+}

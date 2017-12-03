@@ -7,7 +7,7 @@ const fs = require('fs');
 const config = {
   database: 'test', // 使用哪个数据库
   username: 'root', // 用户名
-  password: 'root', // 口令
+  password: 'shigaolei', // 口令
   host: 'localhost', // 主机名
   port: 3306 // 端口号，MySQL默认3306
 };
@@ -138,7 +138,6 @@ fs.readdirSync(normalizedPath)
   //   }
   //   return ret;
   // }
-    debugger;
     t.sync({})
     .then(() => {
       logger.info(modelName + ' Synced Done');
