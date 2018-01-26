@@ -1,7 +1,6 @@
-import navMenu from './navMenu.vue';
+
 
 const components = {
-  navMenu
 };
 
 const mixins = [

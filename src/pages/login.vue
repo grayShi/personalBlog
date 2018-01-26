@@ -1,36 +1,11 @@
 <template>
   <div class="app-background">
-    <el-row style="z-index: 1;top: 35%">
-      <el-col :span="6" :offset="9">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>登录</span>
-          </div>
-          <div style="text-align: center;">
-            <el-form ref="form" :model="form">
-              <el-form-item label="用户名">
-                <el-input v-model="form.username"></el-input>
-              </el-form-item>
-              <el-form-item label="密码">
-                <el-input type="password" v-model="form.password"></el-input>
-              </el-form-item>
-              <el-form-item class="bottom-item">
-                <el-button type="primary" @click="onSubmit">登录</el-button>
-                <div style="text-align: right">
-                  <router-link to="index" id="index" class="app-router-link">点我注册<i class="el-icon-d-arrow-right"></i></router-link>
-                </div>
-              </el-form-item>
-            </el-form>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
     <transition
-      v-bind:css="false"
-      v-on:before-enter="beforeEnter"
-      v-on:enter="enter"
-      v-on:leave="leave">
-      <img v-bind:src="showImg" id="img" v-if="show" />
+      :css="false"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @leave="leave">
+      <img :src="showImg" id="img" v-if="show" />
     </transition>
   </div>
 </template>
