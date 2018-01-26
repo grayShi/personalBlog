@@ -30,7 +30,7 @@ fs.readdirSync(normalizedPath)
     let modelName = _.upperFirst(_.camelCase(fileName.split(/\./)[0]));
     t = exports[modelName] = require('./' + fileName)(seq, Sequelize);
 
-  // 重写sequelize 函数
+  //  重写sequelize 函数
   // t.prototype.__orig_update = t.prototype.update;
   // t.prototype.update = function (values, options) {
   //   const transaction = checkTransaction(options);
@@ -67,9 +67,9 @@ fs.readdirSync(normalizedPath)
   //   const userId = getSession(transaction, USER_ID);
   //   if (userId && !value.createdBy) value.createdBy = userId;
   //   return t.__orig_create(value, options);
-  // }
-  //
-  // //findById and destroy
+  // };
+
+  //findById and destroy
   // t.findAndDestroy = async function (value, options) {
   //   if (value === undefined || (value.id === undefined && value.where === undefined)) {
   //     throw new Error("please provide id as primary key to find data!");
@@ -137,7 +137,7 @@ fs.readdirSync(normalizedPath)
   //     });
   //   }
   //   return ret;
-  // }
+  // };
     t.sync({})
     .then(() => {
       logger.info(modelName + ' Synced Done');

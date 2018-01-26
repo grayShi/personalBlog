@@ -3,9 +3,6 @@ const normalizedPath = require('path');
 const fs = require('fs');
 
 class LogerHandle extends BaseService {
-  constructor () {
-    super();
-  }
   findFile (path, type) {
     return new Promise(function (resolve, reject) {
       const fileNameList = [];

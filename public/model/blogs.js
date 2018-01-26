@@ -1,50 +1,54 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
+  return sequelize.define('blogs', {
     id: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       primaryKey: true,
       autoIncrement: true,
       field: 'id'
     },
-    name: {
-      type: DataTypes.STRING(255),
+    title: {
+      type: DataTypes.STRING(300),
       allowNull: true,
-      field: 'name'
+      field: 'title'
     },
-    password: {
-      type: DataTypes.STRING(255),
+    description: {
+      type: DataTypes.TEXT,
       allowNull: true,
-      field: 'password'
+      field: 'description'
     },
-    role: {
-      type: DataTypes.STRING(255),
+    userId: {
+      type: DataTypes.INTEGER(11),
       allowNull: true,
-      field: 'role'
+      references: {
+        model: 'user',
+        key: 'id'
+      },
+      field: 'userId'
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       field: 'createdAt'
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       field: 'updatedAt'
     },
-    createBy: {
+    createdBy: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      field: 'createBy'
+      field: 'createdBy'
     },
-    updateBy: {
+    updatedBy: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      field: 'updateBy'
+      field: 'updatedBy'
     }
   }, {
-    tableName: 'user'
+    tableName: 'blogs'
   });
 };
