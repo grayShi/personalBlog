@@ -6,6 +6,7 @@
 
 ``` bash
 # install dependencies
+npm install cross-env --save-dev 
 npm install
 
 # serve with hot reload at localhost:8080
