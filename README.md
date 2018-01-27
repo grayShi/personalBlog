@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install cross-env --save-dev 
+npm install cross-env --save-dev
 npm install
 
 # serve with hot reload at localhost:8080
@@ -28,4 +28,7 @@ npm run e2e
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#first question
+if you install highlight by npm, you will download all style with different language;
+these style will conflict
+you need ignore what you do not need

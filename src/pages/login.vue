@@ -13,7 +13,7 @@
 <script>
   import Velocity from 'velocity-animate';
   import _ from 'lodash';
-  import '../assets/loginStyle.css';
+  import './css/loginStyle.css';
 
   export default {
     name: 'background',
