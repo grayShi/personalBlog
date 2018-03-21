@@ -1,15 +1,15 @@
 <template>
   <div>
     <!-- quill-editor插件标签 分别绑定各个事件-->
-    <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+    <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"
                   @change="onEditorChange($event)">
     </quill-editor>
     <div class="limit">当前已输入 <span>{{nowLength}}</span> 个字符，您还可以输入 <span>{{SurplusLength}}</span> 个字符。</div>
-    <!-- 文件上传input 将它隐藏-->
-    <el-upload class="upload-demo" :action="qnLocation" :before-upload='beforeUpload' :data="uploadData" :on-success='upScuccess'
-               ref="upload" style="display:none">
-      <el-button size="small" type="primary" id="imgInput" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="插入中,请稍候">点击上传</el-button>
-    </el-upload>
+    <el-button type="primary" @click="saveCommit">提交</el-button>
+  <div v-html="test">{{test}}</div>
+    <div>
+      <p>test1</p><p><br></p><pre class="ql-syntax" spellcheck="false"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">var</span> b = <span class="hljs-number">1</span>; <span class="hljs-comment">/// aaa</span> }﻿ </pre>
+    </div>
   </div>
 </template>
 
@@ -19,10 +19,11 @@
   import 'quill/dist/quill.core.css';
   import 'quill/dist/quill.snow.css';
   import 'quill/dist/quill.bubble.css';
+  import './css/blogInput.css';
   import { quillEditor } from 'vue-quill-editor';
   import axios from 'axios';
 
-  const saveBlogs = (form) => axios.post('/api/save/saveBlogs', form);
+  const saveBlog = (form) => axios.post('/api/save/saveBlog', form);
 
   export default {
     components: {
@@ -31,6 +32,12 @@
     data () {
       return {
         content: '',
+        test: `&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;test1&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;br&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;pre&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;ql-syntax&quot;&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;spellcheck&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;false&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-function&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-keyword&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;function&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-title&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;a&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-params&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;()&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt;{
+&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-keyword&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;var&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt; b = &lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-number&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;1&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt;; &lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;hljs-attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;hljs-string&quot;&gt;&quot;hljs-comment&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;/// aaa&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;span&lt;/span&gt;&amp;gt;&lt;/span&gt;
+}﻿
+&lt;span class=&quot;hljs-tag&quot;&gt;&amp;lt;/&lt;span class=&quot;hljs-name&quot;&gt;pre&lt;/span&gt;&amp;gt;&lt;/span&gt;`.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'"),
+        nowLength: 0,
+        SurplusLength: 1000,
         editorOption: {
           theme: 'snow',
           modules: {
@@ -48,7 +55,7 @@
               [{ 'color': [] }, { 'background': [] }],
               [{ 'align': [] }],
               ['clean'],
-              ['link', 'image', 'video']
+              ['link', 'video']  // 'image',
             ],
             syntax: {
               highlight: text => hljs.highlightAuto(text).value
@@ -60,11 +67,14 @@
     methods: {
       saveCommit () {
         const form = {
-          description: this.content
+          description: hljs.highlightAuto(this.content).value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;")
         };
-        saveBlogs({ form }).then((result) => {
+        saveBlog({ form }).then((result) => {
           debugger;
         });
+      },
+      onEditorChange ({ editor, html, text }) {
+        this.nowLength = text.length;
       }
     },
     computed: {
