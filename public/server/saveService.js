@@ -6,7 +6,7 @@ class UserHandle extends BaseService {
     super();
     this.blogs = Blogs;
   }
-  saveBlogs (form) {
+  saveBlog (form) {
     const saveData = {
       description: form.description
     };

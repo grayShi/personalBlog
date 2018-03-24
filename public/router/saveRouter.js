@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { success, fail } = require('../utils/commom');
 
-router.post('/saveBlogs', (req, res) => {
-  saveService.saveBlogs(req.body.form).then((v) => {
+router.post('/saveBlog', (req, res) => {
+  saveService.saveBlog(req.body.form).then((v) => {
     success(res, v);
   }).catch(err => fail(res, err));
 });
