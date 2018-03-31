@@ -26,23 +26,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       field: 'createdAt'
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       field: 'updatedAt'
-    },
-    createdBy: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      field: 'createdBy'
-    },
-    updatedBy: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      field: 'updatedBy'
     }
   }, {
     tableName: 'user'

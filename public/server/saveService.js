@@ -8,9 +8,9 @@ class UserHandle extends BaseService {
   }
   saveBlog (form) {
     const saveData = {
-      description: form.description
+      subject: form.subject,
+      contentText: form.contentText
     };
-    debugger;
     return this.blogs.create(saveData);
   }
 }

@@ -1,18 +1,12 @@
 .quill-editor {
-  height: 745px;
+  height: 100%;
 }
-
-.quill-editor .ql-container {
-  height: 680px;
-}
-
 
 .limit {
-  height: 30px;
   border: 1px solid #ccc;
   line-height: 30px;
   text-align: right;
-
+  margin-top: -30px;
 }
 .limit span {
   color: #ee2a7b;
@@ -25,3 +19,4 @@
 .ql-editor .ql-video {
   max-width: 480px;
 }
+

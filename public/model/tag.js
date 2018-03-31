@@ -1,50 +1,46 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
+  return sequelize.define('tag', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
       field: 'id'
     },
-    name: {
+    tagName: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      field: 'name'
-    },
-    password: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      field: 'password'
-    },
-    role: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      field: 'role'
+      field: 'tag_name'
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       field: 'createdAt'
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       field: 'updatedAt'
     },
-    createBy: {
+    createdBy: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      field: 'createBy'
+      field: 'createdBy'
     },
-    updateBy: {
+    updatedBy: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      field: 'updateBy'
+      field: 'updatedBy'
+    },
+    version: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: '0',
+      field: 'version'
     }
   }, {
-    tableName: 'user'
+    tableName: 'tag'
   });
 };

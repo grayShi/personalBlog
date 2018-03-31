@@ -6,8 +6,10 @@ import router from './router';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import Components from './components';
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import './pages/css/mainStyle.css';
+import CommonFunction from './components/commonFunction';
 
 Vue.config.productionTip = false;
 
@@ -16,6 +18,7 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(ElementUI);
 Vue.use(Components);
+Vue.use(CommonFunction);
 
 /* eslint-disable no-new */
 new Vue({

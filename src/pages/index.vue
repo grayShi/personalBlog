@@ -1,95 +1,130 @@
 <template>
-  <div>
-    <!-- quill-editor插件标签 分别绑定各个事件-->
-    <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"
-                  @change="onEditorChange($event)">
-    </quill-editor>
-    <div class="limit">当前已输入 <span>{{nowLength}}</span> 个字符，您还可以输入 <span>{{SurplusLength}}</span> 个字符。</div>
+  <page-container>
+    <el-form ref="blogForm" :model="blogForm" :rules="blogFormRules" label-width="80px">
+      <el-form-item label="主题" prop="subject">
+        <el-input v-model="blogForm.subject"></el-input>
+      </el-form-item>
+      <el-form-item label="标签" prop="tag">
+        <el-tag
+          :key="tag"
+          v-for="tag in blogForm.tag"
+          closable
+          :disable-transitions="false"
+          @close="handleClose(tag)">
+          {{tag}}
+        </el-tag>
+        <el-input
+          class="input-new-tag"
+          v-if="inputVisible"
+          v-model="inputValue"
+          ref="saveTagInput"
+          maxlength="50"
+          size="small"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+      </el-form-item>
+      <el-form-item  label="内容" prop="contentText">
+        <my-quill-editor v-model="blogForm.contentText" style="height: 400px"></my-quill-editor>
+      </el-form-item>
+    </el-form>
+
     <el-button type="primary" @click="saveCommit">提交</el-button>
-    <div class="ql-container ql-snow">
-      <div class="ql-editor" v-html="text">
-      </div>
-    </div>
-  </div>
+    <!--<div class="ql-container ql-snow">-->
+      <!--<div class="ql-editor" v-html="text">-->
+      <!--</div>-->
+    <!--</div>-->
+  </page-container>
 </template>
 
 <script>
-  import hljs from 'highlight.js';
-  import 'highlight.js/styles/tomorrow.css';
-  import 'quill/dist/quill.core.css';
-  import 'quill/dist/quill.snow.css';
-  import 'quill/dist/quill.bubble.css';
-  import './css/blogInput.css';
-  import { quillEditor } from 'vue-quill-editor';
   import axios from 'axios';
+  import myQuillEditor from '../components/my-quill-editor';
 
   const saveBlog = (form) => axios.post('/api/save/saveBlog', form);
 
   export default {
+    name: 'index',
     components: {
-      quillEditor
+      myQuillEditor
     },
     data () {
       return {
-        content: '',
-        text: `&lt;p&gt;text1&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;pre class=&quot;ql-syntax&quot; spellcheck=&quot;false&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; a = &lt;span class=&quot;hljs-number&quot;&gt;1&lt;/span&gt;;
-﻿&lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;{
-  &lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; b﻿ = &lt;span class=&quot;hljs-number&quot;&gt;1&lt;/span&gt;;
-  b++;
-}
-&lt;/pre&gt;`.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'"),
-        nowLength: 0,
-        SurplusLength: 1000,
-        editorOption: {
-          theme: 'snow',
-          modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ 'header': 1 }, { 'header': 2 }],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-              [{ 'script': 'sub' }, { 'script': 'super' }],
-              [{ 'indent': '-1' }, { 'indent': '+1' }],
-              [{ 'direction': 'rtl' }],
-              [{ 'size': ['small', false, 'large', 'huge'] }],
-              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-              [{ 'font': [] }],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'align': [] }],
-              ['clean'],
-              ['link', 'video']  // 'image',
-            ],
-            syntax: {
-              highlight: text => hljs.highlightAuto(text).value
-            }
-          }
+        blogForm: {
+          subject: '',
+          tag: [],
+          contentText: ''
+        },
+        inputVisible: false,
+        inputValue: '',
+        blogFormRules: {
+          subject: [
+            this.required('subject'),
+            this.requiredMax(300)
+          ],
+          tag: [
+            this.required('tag', 'array', 'change')
+          ],
+          contentText: [
+            this.required('contentText'),
+            this.requiredMax(20000)
+          ]
         }
       };
     },
     methods: {
       saveCommit () {
         const form = {
-          // description: hljs.highlightAuto(this.content).value
-          // .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;")
-          description: this.content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;")
+          subject: this.blogForm.subject,
+          tag: this.blogForm.tag,
+          contentText: this.strFormatHtml(this.blogForm.contentText)
         };
-        console.log(this.text);
-        saveBlog({ form }).then((result) => {
+        console.log(form);
+        saveBlog({form}).then((result) => {
           debugger;
         });
       },
-      onEditorChange ({ editor, html, text }) {
-        this.nowLength = text.length;
-      }
-    },
-    computed: {
-      editor () {
-        return this.$refs.myTextEditor.quill;
+      handleClose (tag) {
+        this.blogForm.tag.splice(this.blogForm.tag.indexOf(tag), 1);
+        this.$refs.blogForm.validateField('tag', (valid) => valid);
       },
-      contentCode () {
-        return hljs.highlightAuto(this.content).value;
+
+      showInput () {
+        this.inputVisible = true;
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
+        });
+      },
+
+      handleInputConfirm () {
+        let inputValue = this.inputValue;
+        if (inputValue) {
+          this.blogForm.tag.push(inputValue);
+        }
+        this.$refs.blogForm.validateField('tag', (valid) => valid);
+        this.inputVisible = false;
+        this.inputValue = '';
       }
     }
   };
 </script>
 
+<style scoped>
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+</style>

@@ -4,29 +4,20 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('blogs', {
     id: {
       type: DataTypes.INTEGER(11),
-      allowNull: true,
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
       field: 'id'
     },
-    title: {
+    subject: {
       type: DataTypes.STRING(300),
       allowNull: true,
-      field: 'title'
+      field: 'subject'
     },
-    description: {
+    contentText: {
       type: DataTypes.TEXT,
       allowNull: true,
-      field: 'description'
-    },
-    userId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      references: {
-        model: 'user',
-        key: 'id'
-      },
-      field: 'userId'
+      field: 'contentText'
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -47,6 +38,17 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true,
       field: 'updatedBy'
+    },
+    tag: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      field: 'tag'
+    },
+    version: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: '0',
+      field: 'version'
     }
   }, {
     tableName: 'blogs'
