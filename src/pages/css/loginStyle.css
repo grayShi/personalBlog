@@ -1,3 +1,4 @@
+html, body{ height:100%; }
 .app-background{
   position: fixed;
   left: 0;
@@ -21,8 +22,13 @@
   vertical-align: middle;
   z-index: -99;
 }
+.app-page {
+  height: 100%;
+  width:100%;
+  overflow: hidden;
+}
 .box-card {
-  height: 92%;
+  height: 90%;
   display: flex;
   justify-content:center;
   align-items: center;

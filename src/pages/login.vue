@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;width:100%">
+  <div class="app-page">
     <div class="box-card">
       <login-background></login-background>
       <el-card v-if="showCard" class="login-card">
@@ -18,12 +18,14 @@
       </el-card>
     </div>
     <div class="icon-button">
+      <div>
       <el-tooltip effect="dark" content="移除登录框" placement="top" v-if="showCard">
         <el-button circle icon="el-icon-arrow-right" @click="showCard = !showCard"></el-button>
       </el-tooltip>
       <el-tooltip effect="dark" content="显示登录框" placement="top" v-else>
         <el-button circle icon="el-icon-arrow-left" @click="showCard = !showCard"></el-button>
       </el-tooltip>
+      </div>
     </div>
   </div>
 </template>
