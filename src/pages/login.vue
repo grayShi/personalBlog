@@ -2,7 +2,7 @@
   <div style="height: 100%;width:100%">
     <div class="box-card">
       <login-background></login-background>
-      <el-card v-if="showCard">
+      <el-card v-if="showCard" class="login-card">
         <el-form label-width="100px" :rules="rules" ref="loginForm" :model="loginForm" class="login-table">
           <el-form-item label="账号" prop="name">
             <el-input type="text" auto-complete="off" v-model="loginForm.name" placeholder="请输入账号"></el-input>
@@ -10,13 +10,11 @@
           <el-form-item label="密码" prop="password">
             <el-input type="password" auto-complete="off" v-model="loginForm.password" placeholder="请输入密码"></el-input>
           </el-form-item>
-          <el-form-item>
-            <!-- 点击进行登录提交 -->
-            <el-button type="primary" @click="handleSubmit">登录</el-button>
-            <!-- 点击重置表单 -->
-            <el-button @click="handleReset">重置</el-button>
-          </el-form-item>
         </el-form>
+        <!-- 点击进行登录提交 -->
+        <el-button type="primary" @click="handleSubmit">登录</el-button>
+        <!-- 点击重置表单 -->
+        <el-button @click="handleReset">重置</el-button>
       </el-card>
     </div>
     <div class="icon-button">

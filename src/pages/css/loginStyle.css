@@ -4,7 +4,6 @@
   top:0;
   height: 100%;
   width: 100%;
-  min-width: 1000px;
   z-index: -100;
   background-position: center 0;
   background-repeat: no-repeat;
@@ -39,4 +38,7 @@
 .icon-button {
   display: flex;
   justify-content: flex-end;
+}
+.login-card {
+  text-align: center;
 }
