@@ -76,14 +76,18 @@
     },
     methods: {
       saveCommit () {
-        const form = {
-          subject: this.blogForm.subject,
-          tag: this.blogForm.tag,
-          contentText: this.strFormatHtml(this.blogForm.contentText)
-        };
-        console.log(form);
-        saveBlog({form}).then((result) => {
-          debugger;
+        this.$refs.blogForm.validateField('tag', (valid) => {
+          if (valid) {
+            const form = {
+              subject: this.blogForm.subject,
+              tag: this.blogForm.tag,
+              contentText: this.strFormatHtml(this.blogForm.contentText)
+            };
+            console.log(form);
+            saveBlog({form}).then((result) => {
+              debugger;
+            });
+          }
         });
       },
       handleClose (tag) {
@@ -99,7 +103,7 @@
       },
 
       handleInputConfirm () {
-        let inputValue = this.inputValue;
+        let inputValue = `#${this.inputValue}`;
         if (inputValue) {
           this.blogForm.tag.push(inputValue);
         }

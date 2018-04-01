@@ -6,12 +6,15 @@ class UserHandle extends BaseService {
     super();
     this.user = User;
   }
-  login (username) {
-    return this.user.findAll({
+  async login (form) {
+    const user = await this.user.findOne({
       where: {
-        id: 1
-      }
+        name: form.name,
+        password: form.password
+      },
+      attributes: ['id', 'name', 'password', 'role']
     });
+    return user;
   }
 }
 module.exports = new UserHandle();

@@ -17,5 +17,8 @@
       Vue.prototype.getMessage = function (code, message) {
         return code;
       };
+      Vue.prototype.resetForm = function (formName) {
+        this.$refs[formName].resetFields();
+      };
     }
   };

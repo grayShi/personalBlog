@@ -1,103 +1,77 @@
 <template>
-  <div class="app-background">
-    <transition
-      :css="false"
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @leave="leave">
-      <img :src="showImg" id="img" v-if="show" />
-    </transition>
+  <div style="height: 100%;width:100%">
+    <div class="box-card">
+      <login-background></login-background>
+      <el-card v-if="showCard">
+        <el-form label-width="100px" :rules="rules" ref="loginForm" :model="loginForm" class="login-table">
+          <el-form-item label="账号" prop="name">
+            <el-input type="text" auto-complete="off" v-model="loginForm.name" placeholder="请输入账号"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input type="password" auto-complete="off" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <!-- 点击进行登录提交 -->
+            <el-button type="primary" @click="handleSubmit">登录</el-button>
+            <!-- 点击重置表单 -->
+            <el-button @click="handleReset">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </div>
+    <div class="icon-button">
+      <el-tooltip effect="dark" content="移除登录框" placement="top" v-if="showCard">
+        <el-button circle icon="el-icon-arrow-right" @click="showCard = !showCard"></el-button>
+      </el-tooltip>
+      <el-tooltip effect="dark" content="显示登录框" placement="top" v-else>
+        <el-button circle icon="el-icon-arrow-left" @click="showCard = !showCard"></el-button>
+      </el-tooltip>
+    </div>
   </div>
 </template>
 
 <script>
-  import Velocity from 'velocity-animate';
   import _ from 'lodash';
-  import './css/loginStyle.css';
+  import loginBackground from '../components/login-background';
+  import axios from 'axios';
 
+  const logIn = (form) => axios.post('/api/user/login', form);
   export default {
-    name: 'background',
+    name: 'index',
+    components: {
+      loginBackground
+    },
     data () {
       return {
-        imgs: [],
-        form: {
-          username: '',
+        showCard: true,
+        loginForm: {
+          name: '',
           password: ''
         },
-        isAnimate: false,
-        showImg: 'src/assets/background/background1.jpg',
-        showQuantity: 0,
-        showIndex: 0,
-        show: true
+        rules: {
+          name: [
+            this.required('name')
+          ],
+          password: [
+            this.required('password')
+          ]
+        }
       };
     },
-    mounted: function () {
-      this.$nextTick(function () {
-        this.show = false;
-        this.loadBackground();
-      });
-    },
     methods: {
-      loadBackground: function () {
-        const path = 'src/assets/background';
-        this.$http.post('/api/log/find', {
-          path, type: 'photo'
-        }, {}).then((result) => {
-          if (result.data.success) {
-            this.showQuantity = result.data.data.length;
-            if (this.showQuantity > 0) {
-              this.showImg = `${path}/${result.data.data[0]}`;
-            }
-            _.filter(result.data.data, item => {
-              this.imgs.push({
-                fileName: item.split('.')[0],
-                imgURL: `${path}/${item}`
-              });
+      handleSubmit () {
+        this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            logIn({form: this.loginForm}).then(data => {
+              if (data.data.success && data.data.data) {
+                this.$router.push({path: '/index'});
+              }
             });
           }
         });
       },
-      beforeEnter: function (name) {
-        name.style.opacity = 0;
-        name.style.transform = 'scale(1) rotate(0deg)';
-      },
-      enter: function (name, done) {
-        const self = this;
-        Velocity(name,
-          {
-            opacity: 1,
-            scale: 1.2,
-            rotateZ: '3deg'
-          },
-          {
-            duration: 6000,
-            complete: function () {
-              done();
-              self.show = false;
-            }
-          }
-        );
-      },
-      leave: function (name, done) {
-        const self = this;
-        Velocity(name,
-          {
-            opacity: 0,
-            scale: 1,
-            rotateZ: '0deg'
-          },
-          {
-            duration: 6000,
-            complete: function () {
-              done();
-              self.showImg = self.imgs[self.showIndex === self.showQuantity - 1 ? self.showIndex = 0 : self.showIndex += 1].imgURL;
-              self.show = true;
-            }
-          }
-        );
-      },
-      onSubmit () {
-
+      handleReset () {
+        this.resetForm('loginForm');
       }
     }
   };
