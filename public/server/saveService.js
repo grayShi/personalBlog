@@ -9,22 +9,23 @@ class UserHandle extends BaseService {
     this.tag = Tag;
   }
   async saveBlog (form) {
-    // return this.doTransaction(async (transaction) => {
-    let tagId = [];
-    return Promise.all(_.map(form.tag, async item => {
-      const findTags = await this.tag.findOrCreate({
-        where: {
-          tagName: item
-        }
+    return this.doTransaction(async (transaction) => {
+      let tagId = [];
+      return Promise.all(_.map(form.tag, async item => {
+        const findTags = await this.tag.findOrCreate({
+          where: {
+            tagName: item
+          }
+        });
+        tagId.push(findTags[0].id);
+      })).then(() => {
+        const saveData = {
+          subject: form.subject,
+          contentText: form.contentText,
+          tagId: tagId.join(',')
+        };
+        return this.blogs.create(saveData);
       });
-      tagId.push(findTags[0].id);
-    })).then(() => {
-      const saveData = {
-        subject: form.subject,
-        contentText: form.contentText,
-        tagId: tagId.join(',')
-      };
-      return this.blogs.create(saveData);
     });
   }
 }

@@ -1,9 +1,8 @@
-const Sequelize = require('sequelize');
-const seq = require('../model');
+
+const seq = require('../model').getConnection();
 
 module.exports = class BaseService {
   async doTransaction (operations, transaction) {
-    debugger
     if (typeof transaction === 'undefined' || transaction === null) {
       return seq.transaction(transaction => operations(transaction));
     }

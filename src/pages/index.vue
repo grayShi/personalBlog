@@ -76,7 +76,7 @@
     },
     methods: {
       saveCommit () {
-        this.$refs.blogForm.validateField('tag', (valid) => {
+        this.$refs.blogForm.validate((valid) => {
           if (valid) {
             const form = {
               subject: this.blogForm.subject,
