@@ -2,7 +2,7 @@ const BaseService = require('./baseService');
 const normalizedPath = require('path');
 const fs = require('fs');
 
-class LogerHandle extends BaseService {
+class LoggerHandle extends BaseService {
   findFile (path, type) {
     return new Promise(function (resolve, reject) {
       const fileNameList = [];
@@ -24,4 +24,4 @@ class LogerHandle extends BaseService {
     });
   }
 }
-module.exports = new LogerHandle();
+module.exports = new LoggerHandle();
