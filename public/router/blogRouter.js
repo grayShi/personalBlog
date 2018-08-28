@@ -9,4 +9,10 @@ router.post('/saveBlog', (req, res) => {
   }).catch(err => fail(res, err));
 });
 
+router.post('/findBlogList', (req, res) => {
+  saveService.findBlogList().then((v) => {
+    success(res, v);
+  }).catch(err => fail(res, err));
+});
+
 module.exports = router;

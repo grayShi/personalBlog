@@ -39,10 +39,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       field: 'updatedBy'
     },
-    tagId: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-      field: 'tagId'
+    isValid: {
+      type: DataTypes.INTEGER(1),
+      allowNull: false,
+      field: 'is_valid'
     },
     version: {
       type: DataTypes.INTEGER(11),

@@ -10,21 +10,23 @@ class UserHandle extends BaseService {
   }
   async saveBlog (form) {
     return this.doTransaction(async (transaction) => {
-      let tagId = [];
-      return Promise.all(_.map(form.tag, async item => {
-        const findTags = await this.tag.findOrCreate({
-          where: {
-            tagName: item
-          }
-        });
-        tagId.push(findTags[0].id);
-      })).then(() => {
-        const saveData = {
-          subject: form.subject,
-          contentText: form.contentText,
-          tagId: tagId.join(',')
-        };
-        return this.blogs.create(saveData);
+      const saveData = {
+        subject: form.subject,
+        contentText: form.contentText,
+        isValid: true,
+        blogTag: _.map(form.tag, item => ({tagName: item}))
+      };
+      debugger;
+      return this.blogs.create(saveData, {include: 'blogTag', transaction});
+    });
+  }
+  async findBlogList () {
+    return this.doTransaction(async (transaction) => {
+      return this.blogs.findAll({
+        include: {
+          association: 'blogTag'
+        },
+        transaction
       });
     });
   }

@@ -19,6 +19,26 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: '0',
       field: 'version'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'createdAt'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'updatedAt'
+    },
+    createdBy: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'createdBy'
+    },
+    updatedBy: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'updatedBy'
     }
   }, {
     tableName: 'tag'

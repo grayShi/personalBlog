@@ -9,6 +9,11 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       field: 'id'
     },
+    blogId: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'blog_id'
+    },
     tagName: {
       type: DataTypes.STRING(255),
       allowNull: true,

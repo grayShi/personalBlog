@@ -24,6 +24,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       field: 'role'
     },
+    isValid: {
+      type: DataTypes.INTEGER(1),
+      allowNull: false,
+      field: 'is_valid'
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: true,

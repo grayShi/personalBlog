@@ -4,6 +4,7 @@ const routerIndex = require('./router/index');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const mapping = require('./mapping/index');
 const express = require('express');
 const app = express();
 
