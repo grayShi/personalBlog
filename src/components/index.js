@@ -1,10 +1,11 @@
 import pageContainer from './page-container';
+import mixin from "./commonFunction";
 
 const components = {
   pageContainer
 };
 
-const mixins = [];
+const mixins = [mixin];
 
 const install = function (Vue) {
   Object.keys(components).forEach((key) => {

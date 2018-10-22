@@ -1,7 +1,7 @@
 const logService = require('../server/logService');
 const express = require('express');
 const router = express.Router();
-const { success, fail } = require('../utils/commom');
+const { success, fail } = require('../utils/common');
 
 router.post('/find', (req, res) => {
   logService.findFile(req.body.path, req.body.type).then((v) => {

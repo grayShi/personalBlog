@@ -1,16 +1,16 @@
-const saveService = require('../server/saveService');
+const blogService = require('../server/blogService');
 const express = require('express');
 const router = express.Router();
-const { success, fail } = require('../utils/commom');
+const { success, fail } = require('../utils/common');
 
 router.post('/saveBlog', (req, res) => {
-  saveService.saveBlog(req.body.form).then((v) => {
+  blogService.saveBlog(req.body.form).then((v) => {
     success(res, v);
   }).catch(err => fail(res, err));
 });
 
 router.post('/findBlogList', (req, res) => {
-  saveService.findBlogList().then((v) => {
+  blogService.findBlogList().then((v) => {
     success(res, v);
   }).catch(err => fail(res, err));
 });

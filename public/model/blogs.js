@@ -51,6 +51,7 @@ module.exports = function(sequelize, DataTypes) {
       field: 'version'
     }
   }, {
-    tableName: 'blogs'
+    tableName: 'blogs',
+    version: true
   });
 };

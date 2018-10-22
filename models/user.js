@@ -24,6 +24,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       field: 'role'
     },
+    isValid: {
+      type: DataTypes.INTEGER(1),
+      allowNull: false,
+      field: 'is_valid'
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -35,12 +40,12 @@ module.exports = function(sequelize, DataTypes) {
       field: 'updatedAt'
     },
     createdBy: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING(255),
       allowNull: true,
       field: 'createdBy'
     },
     updatedBy: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING(255),
       allowNull: true,
       field: 'updatedBy'
     }

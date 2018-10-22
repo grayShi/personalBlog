@@ -31,7 +31,6 @@
 </template>
 
 <script>
-  import _ from 'lodash';
   import loginBackground from '../components/login-background';
   import axios from 'axios';
 
@@ -50,10 +49,10 @@
         },
         rules: {
           name: [
-            this.required('name')
+            this.requiredRules('name')
           ],
           password: [
-            this.required('password')
+            this.requiredRules('password')
           ]
         }
       };

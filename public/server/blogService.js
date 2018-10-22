@@ -16,18 +16,31 @@ class UserHandle extends BaseService {
         isValid: true,
         blogTag: _.map(form.tag, item => ({tagName: item}))
       };
-      debugger;
       return this.blogs.create(saveData, {include: 'blogTag', transaction});
     });
   }
   async findBlogList () {
     return this.doTransaction(async (transaction) => {
-      return this.blogs.findAll({
-        include: {
-          association: 'blogTag'
+      const find = await this.blogs.findAll({
+        attributes: ['id', 'subject', 'contentText', 'updatedAt', 'createdBy'],
+        where: {
+          isValid: true
         },
+        include: {
+          association: 'blogTag',
+          attributes: ['tagName']
+        },
+        order: [['updatedAt', 'desc']],
         transaction
       });
+      return _.map(find, item => ({
+        id: item.id,
+        subject: item.subject,
+        contentText: item.contentText.slice(0, 20),
+        updatedAt: item.updatedAt,
+        createdBy: item.createdBy,
+        blogTag: item.blogTag
+      }));
     });
   }
 }

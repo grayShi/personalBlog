@@ -50,6 +50,7 @@ module.exports = function(sequelize, DataTypes) {
       field: 'updatedBy'
     }
   }, {
-    tableName: 'user'
+    tableName: 'user',
+    version: true
   });
 };

@@ -14,12 +14,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       field: 'tag_name'
     },
-    version: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: '0',
-      field: 'version'
-    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -39,6 +33,17 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true,
       field: 'updatedBy'
+    },
+    version: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: '0',
+      field: 'version'
+    },
+    blogId: {
+      type: DataTypes.INTEGER(10).UNSIGNED,
+      allowNull: true,
+      field: 'blog_id'
     }
   }, {
     tableName: 'tag'

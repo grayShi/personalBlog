@@ -43,7 +43,7 @@
   import axios from 'axios';
   import myQuillEditor from '../components/my-quill-editor';
 
-  const saveBlog = (form) => axios.post('/api/save/saveBlog', form);
+  const saveBlog = (form) => axios.post('/api/blog/saveBlog', form);
 
   export default {
     name: 'index',
@@ -61,14 +61,14 @@
         inputValue: '',
         blogFormRules: {
           subject: [
-            this.required('subject'),
+            this.requiredRules('subject'),
             this.requiredMax(300)
           ],
           tag: [
-            this.required('tag', 'array', 'change')
+            this.requiredRules('tag', 'array', 'change')
           ],
           contentText: [
-            this.required('contentText'),
+            this.requiredRules('contentText'),
             this.requiredMax(20000)
           ]
         }

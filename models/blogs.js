@@ -39,21 +39,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       field: 'updatedBy'
     },
-    tagId: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-      field: 'tagId'
+    isValid: {
+      type: DataTypes.INTEGER(1),
+      allowNull: false,
+      field: 'is_valid'
     },
     version: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: '0',
       field: 'version'
-    },
-    column1: {
-      type: DataTypes.INTEGER(1),
-      allowNull: true,
-      field: 'column1'
     }
   }, {
     tableName: 'blogs'

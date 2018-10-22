@@ -5,5 +5,5 @@ const {
 } = require('../model');
 
 // Blogs.belongsTo(Company, {foreignKey:'companyId'});
-Blogs.hasMany(Tag, {foreignKey: 'blogId', sourceKey: 'id', as: 'blogTag'});
-Tag.belongsTo(Blogs, {foreignKey: 'blogId', targetKey: 'id'});
+Blogs.hasMany(Tag, {foreignKey: 'blogId', targetKey: 'id', as: 'blogTag'});
+Tag.belongsTo(Blogs, {foreignKey: 'blogId', as: 'tagBlog'});
