@@ -4,6 +4,9 @@
       <el-form-item label="主题" prop="subject">
         <el-input v-model="blogForm.subject"></el-input>
       </el-form-item>
+      <el-form-item label="简介" prop="introduction">
+        <el-input v-model="blogForm.introduction"></el-input>
+      </el-form-item>
       <el-form-item label="标签" prop="tag">
         <el-tag
           :key="tag"
@@ -54,6 +57,7 @@
       return {
         blogForm: {
           subject: '',
+          introduction: '',
           tag: [],
           contentText: ''
         },
@@ -63,6 +67,10 @@
           subject: [
             this.requiredRules('subject'),
             this.requiredMax(300)
+          ],
+          introduction: [
+            this.requiredRules('introduction'),
+            this.requiredMax(100)
           ],
           tag: [
             this.requiredRules('tag', 'array', 'change')
@@ -80,12 +88,15 @@
           if (valid) {
             const form = {
               subject: this.blogForm.subject,
+              introduction: this.blogForm.introduction,
               tag: this.blogForm.tag,
               contentText: this.strFormatHtml(this.blogForm.contentText)
             };
             console.log(form);
             saveBlog({form}).then((result) => {
-              debugger;
+              if (result.data.success) {
+                alert('success');
+              }
             });
           }
         });

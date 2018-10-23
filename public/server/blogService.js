@@ -12,6 +12,7 @@ class UserHandle extends BaseService {
     return this.doTransaction(async (transaction) => {
       const saveData = {
         subject: form.subject,
+        introduction: form.introduction,
         contentText: form.contentText,
         isValid: true,
         blogTag: _.map(form.tag, item => ({tagName: item}))
@@ -22,7 +23,7 @@ class UserHandle extends BaseService {
   async findBlogList () {
     return this.doTransaction(async (transaction) => {
       const find = await this.blogs.findAll({
-        attributes: ['id', 'subject', 'contentText', 'updatedAt', 'createdBy'],
+        attributes: ['id', 'subject', 'introduction', 'updatedAt', 'createdBy'],
         where: {
           isValid: true
         },
@@ -36,11 +37,27 @@ class UserHandle extends BaseService {
       return _.map(find, item => ({
         id: item.id,
         subject: item.subject,
-        contentText: item.contentText.slice(0, 20),
+        introduction: item.introduction,
         updatedAt: item.updatedAt,
         createdBy: item.createdBy,
         blogTag: item.blogTag
       }));
+    });
+  }
+
+  getDetailBlog (blogId) {
+    return this.doTransaction(async (transaction) => {
+      return this.blogs.findOne({
+        attributes: ['id', 'subject', 'contentText', 'introduction', 'updatedAt', 'createdBy'],
+        where: {
+          id: blogId
+        },
+        include: {
+          association: 'blogTag',
+          attributes: ['tagName']
+        },
+        transaction
+      });
     });
   }
 }

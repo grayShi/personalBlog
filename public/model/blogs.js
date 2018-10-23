@@ -49,6 +49,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: '0',
       field: 'version'
+    },
+    introduction: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      field: 'introduction'
     }
   }, {
     tableName: 'blogs',

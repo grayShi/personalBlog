@@ -4,23 +4,34 @@
       <el-header>Show Blog</el-header>
       <el-main>
         <el-row align v-for="blog in blogList" class="blog-crad">
-          <el-col :span="16">
+          <el-col>
             <el-card shadow="hover">
-              <div slot="header">
-                <span>{{blog.subject}}</span>
-              </div>
-              <div>
-                {{blog.contentText}}
-              </div>
-              <div v-for="tag in blog.blogTag">
-                <span>{{tag.tagName}}</span>
-              </div>
-              <div>
+              <el-row>
+                <el-col :span="6" class="image">
+                  <!--<img src="../assets/logo.png" title="Picture">-->
+                  <div class="div-image">
+                  </div>
+                </el-col>
+                <el-col :span="17" :offset="1">
+                  <el-row class="header">
+                    <h1 style="margin-bottom: 0px"><a href="javascript:void(0)" @click="goToDetail(blog.id)">{{blog.subject}}</a></h1>
+                  </el-row>
+                  <el-row class="introduction">
+                    <p style="margin-top: 5px">{{blog.introduction}}</p>
+                  </el-row>
+                  <el-row>
+                    <el-tag size="medium" v-for="(tag, index) in blog.blogTag" :class="{ tagFormat: index > 0 }">{{tag.tagName}}</el-tag>
+                  </el-row>
+                </el-col>
+              </el-row>
+              <el-row class="footer">
+                <span class="time">
                 Last Update: {{blog.updatedAt}}
-              </div>
-              <div>
-                Author: {{blog.createdBy}}
-              </div>
+                </span>
+                <span>
+                    Author: {{blog.createdBy}}
+                  </span>
+              </el-row>
             </el-card>
           </el-col>
 
@@ -35,6 +46,7 @@
   import _ from 'lodash';
 
   const findBlogList = () => axios.post('/api/blog/findBlogList');
+
   export default {
     name: 'show-blog',
     data () {
@@ -49,7 +61,7 @@
             this.blogList.push({
               id: data.id,
               subject: data.subject,
-              contentText: data.contentText,
+              introduction: data.introduction,
               updatedAt: this.dateFormat(data.updatedAt),
               createdBy: data.createdBy,
               blogTag: data.blogTag
@@ -57,12 +69,50 @@
           });
         }
       });
+    },
+    methods: {
+      goToDetail (id) {
+        this.$router.push(`/detailBlog?blogId=${id}`);
+      }
     }
   };
 </script>
 
 <style scoped>
- .blog-crad {
-   padding-bottom: 20px;
- }
+  .blog-crad {
+    padding-bottom: 20px;
+  }
+  .header {
+    border-bottom: 1px solid #409EFF;
+    font-size: 20px;
+    font-weight: bolder;
+  }
+  .time {
+    color: #999;
+  }
+  .footer {
+    text-align: right;
+  }
+  .footer span {
+    font-size: 13px;
+    margin-right: 20px;
+  }
+  .tagFormat {
+    margin-left: 10px;
+  }
+  .introduction {
+    margin-bottom: 13px;
+    height: 70px;
+  }
+  .image {
+    border: 1px solid #EBEEF5;
+  }
+  .div-image {
+    background-image: url('../assets/logo.png');
+    background-repeat: no-repeat;
+    background-position:center center;
+    background-size: cover;
+    width: 100%;
+    height: 180px;
+  }
 </style>
