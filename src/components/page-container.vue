@@ -18,5 +18,7 @@
 <style scoped>
   .el-card {
     height: 97%;
+    overflow: scroll;
+    padding-bottom: 20px;
   }
 </style>

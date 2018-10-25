@@ -6,3 +6,9 @@ a:link,a:visited{
   text-decoration:none;
 }
 a:hover{color: #F56C6C;}
+
+p{
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}

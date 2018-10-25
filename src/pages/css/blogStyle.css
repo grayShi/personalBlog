@@ -1,0 +1,14 @@
+.time {
+  color: #999;
+}
+.footer {
+  text-align: right;
+  float: right;
+}
+.footer span {
+  font-size: 13px;
+  margin-right: 20px;
+}
+.tagFormat {
+  margin-left: 10px;
+}

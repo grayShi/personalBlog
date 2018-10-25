@@ -44,6 +44,7 @@
 <script>
   import axios from 'axios';
   import _ from 'lodash';
+  import '../pages/css/blogStyle.css';
 
   const findBlogList = () => axios.post('/api/blog/findBlogList');
 
@@ -86,19 +87,6 @@
     border-bottom: 1px solid #409EFF;
     font-size: 20px;
     font-weight: bolder;
-  }
-  .time {
-    color: #999;
-  }
-  .footer {
-    text-align: right;
-  }
-  .footer span {
-    font-size: 13px;
-    margin-right: 20px;
-  }
-  .tagFormat {
-    margin-left: 10px;
   }
   .introduction {
     margin-bottom: 13px;
